@@ -1,0 +1,3 @@
+ACTION=="add", ATTRS{idVendor}=="05c6", ATTRS{idProduct}=="1000", RUN+="/usr/sbin/usb_modeswitch -v 0x5c6 -p 0x1000 -K", OPTIONS+="last_rule"
+
+ACTION=="add", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1001", RUN+="/usr/bin/wvdial", OPTIONS+="last_rule"
