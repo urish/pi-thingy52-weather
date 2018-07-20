@@ -1,0 +1,14 @@
+{
+  "name": "agent",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "https://github.com/urish/pi-thingy52-weather",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "doasync": "^2.0.1",
+    "thingy52": "^1.0.4"
+  }
+}
