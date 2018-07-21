@@ -19,6 +19,14 @@ apt-get install wvdial usb-modeswitch
 
 5. Insert a SIM card into your 3G dongle and then plug it into the Raspberry Pi. You should be connected to the internet in about 30 seconds.
 
+## Testing your connection
+
+If you are connected to your Raspberry Pi over WiFi or Ethernet and want to test the PPP connection without first disconnecting the Pi from the other network, you can run the following command:
+
+```shell
+ping -i ppp0 www.google.com
+```
+
 ## Troubleshooting
 
 Look for logs in `/var/log/syslog`. In particular, it should contain entries similar to these:
