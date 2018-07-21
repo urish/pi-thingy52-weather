@@ -29,7 +29,12 @@ ping -i ppp0 www.google.com
 
 ## Troubleshooting
 
-Look for logs in `/var/log/syslog`. In particular, it should contain entries similar to these:
+The lights in the modem should blink rapidly. If they are constantly on, there is a problem with
+`usb-modeswitch`. Try running `lsusb` to see whether the device was detected. You may need to 
+change the Vendor Id / Product Id if your stick uses a different ones - just edit [50-hsdpa-usb.rules](50-hsdpa-usb.rules) and replace the values `5c6` and `1000` with the Vendor Id and the Product Id
+of your device. Note that each of these values appear twice in this file.
+
+If the lights are blinking slowly (about once per second), there is a problem with establishing the cellular link or the data connection. Look for logs in `/var/log/syslog`. In particular, it should contain entries similar to these:
 
 ```
 usb 1-1.2: New USB device found, idVendor=174c, idProduct=55aa
