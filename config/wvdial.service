@@ -1,0 +1,6 @@
+[Unit]
+Description=GSM Modem Dialer
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wvdial
