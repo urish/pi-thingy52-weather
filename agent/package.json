@@ -8,6 +8,7 @@
     "start": "node src/index.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "doasync": "^2.0.1",
     "thingy52": "^1.0.4"
   }

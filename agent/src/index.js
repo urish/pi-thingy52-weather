@@ -1,12 +1,39 @@
 const Thingy = require('thingy52');
 const doAsync = require('doasync');
+const qs = require('querystring');
+const axios = require('axios');
+
+const FORM_ID = process.env.FORM_ID;
+
+let sensorData = {};
+
+function submitForm(sensorData) {
+  console.log('Reporting', sensorData);
+  return axios.post(
+    `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`,
+    qs.stringify({
+      'entry.1541147136': sensorData.pressure || '',
+      'entry.30238041': sensorData.temperature || '',
+      'entry.199887563': sensorData.humidity || '',
+      'entry.128388315': sensorData.eco2 || '',
+      'entry.2097760052': sensorData.tvoc || '',
+      'entry.519103590': sensorData.batteryLevel || '',
+      fvv: 1,
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  );
+}
 
 function updateReading(value) {
-  console.log('New data:', value);
+  Object.assign(sensorData, value);
 }
 
 function setupThingy(thingy) {
-  thingy.on('batteryLevelChange', (batteryLevel) => updateReading({batteryLevel}));
+  thingy.on('batteryLevelChange', (batteryLevel) => updateReading({ batteryLevel }));
   thingy.on('temperatureNotif', (temperature) => updateReading({ temperature }));
   thingy.on('pressureNotif', (pressure) => updateReading({ pressure }));
   thingy.on('humidityNotif', (humidity) => updateReading({ humidity }));
@@ -42,6 +69,8 @@ async function onThingyFound(thingy) {
     console.log('Found Thingy: ' + thingy);
     await doAsync(thingy).connectAndSetUp();
     await setupThingy(thingy);
+    submitForm(sensorData);
+    setInterval(() => submitForm(sensorData), 60000);
   } catch (err) {
     console.error('Thingy52 connection failed:', err);
   }
